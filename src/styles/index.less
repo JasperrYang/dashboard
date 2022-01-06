@@ -1,0 +1,50 @@
+@import './variables.less';
+@import '~element-ui/lib/theme-chalk/index.css';
+
+@--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+html {
+  font-family: @font-family;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: @body-bg;
+}
+
+.el-pagination {
+  color: #868e96;
+}
+
+.status {
+  display: inline-block;
+  cursor: pointer;
+  width: .875rem;
+  height: .875rem;
+  vertical-align: middle;
+  border-radius: 50%;
+
+  &-primary {
+    background: @primary-color;
+  }
+
+  &-success {
+    background: @success-color;
+  }
+
+  &-warning {
+    background: @warning-color;
+  }
+
+  &-danger {
+    background: @danger-color;
+  }
+
+  &-info {
+    background: @info-color;
+  }
+}
