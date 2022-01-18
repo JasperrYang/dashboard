@@ -16,7 +16,7 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: '', // 默认子路由
-        name: '/home',
+        name: 'home',
         component: () => import(/* webpackChunkName: 'home' */ '@/views/home/index.vue')
       },
       {
