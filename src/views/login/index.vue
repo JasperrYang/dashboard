@@ -19,6 +19,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import User from '@/engin/User'
 import { Form } from 'element-ui'
+// import { mapActions } from 'vuex'
 
 @Component
 export default class LoginIndex extends Vue {
@@ -39,7 +40,6 @@ export default class LoginIndex extends Vue {
   }
 
   isLoading = false
-
   async submitForm (): Promise<void> {
     try {
       await (this.$refs.form as Form).validate()
@@ -48,6 +48,7 @@ export default class LoginIndex extends Vue {
       if (result.state !== 1) {
         this.$message.error(result.message)
       } else {
+        this.$store.dispatch('login', result.content)
         this.$message.success('登录成功')
         this.$router.push({ name: 'home' })
       }
