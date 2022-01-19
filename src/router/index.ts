@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import User from '@/engin/User'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -78,7 +78,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!User.hasLogin()) {
+    if (!store.state.user) {
       next({
         name: 'login',
         query: {

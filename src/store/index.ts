@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -10,9 +9,8 @@ export default new Vuex.Store({
   },
   mutations: {
     login (state, payload) {
-      const user = JSON.parse(payload)
-      state.user = { ...user, expiresTime: moment().unix() + user.expires_in }
-      window.localStorage.setItem('user', JSON.stringify(state.user))
+      state.user = JSON.parse(payload)
+      window.localStorage.setItem('user', payload)
     },
     singOut (state) {
       state.user = null
