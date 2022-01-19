@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <el-aside :width='isCollapse ? "65px" : "200px"'>
+      <el-aside style="width: auto">
         <layout-aside :isCollapse="isCollapse" />
       </el-aside>
       <el-container>

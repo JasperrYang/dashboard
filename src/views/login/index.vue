@@ -19,7 +19,6 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import User from '@/engin/User'
 import { Form } from 'element-ui'
-// import { mapActions } from 'vuex'
 
 @Component
 export default class LoginIndex extends Vue {
@@ -50,10 +49,11 @@ export default class LoginIndex extends Vue {
       } else {
         this.$store.dispatch('login', result.content)
         this.$message.success('登录成功')
-        this.$router.push({ name: 'home' })
+        this.$router.push(this.$route.query.redirect as string || '/')
       }
       this.isLoading = false
     } catch (e) {
+      this.isLoading = false
       this.$message.error('登录失败, 请重新尝试')
     }
   }

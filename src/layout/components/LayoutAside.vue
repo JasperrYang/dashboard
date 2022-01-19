@@ -75,9 +75,11 @@ export default class LayoutAside extends LayoutIndex {
 </script>
 <style lang="less" scoped>
 .aside {
-  width: 200px;
   .el-menu {
     min-height: 100vh;
+  }
+  .el-menu:not(.el-menu--collapse) {
+    width: 200px;
   }
 }
 </style>
