@@ -28,9 +28,10 @@ request.interceptors.request.use(
 )
 
 // 响应拦截
-let isRefresh: boolean = false
+let isRefresh = false
+// eslint-disable-next-line
 let requests: any[] = []
-axios.interceptors.response.use(
+request.interceptors.response.use(
   (response) => {
     return response
   },
@@ -41,14 +42,18 @@ axios.interceptors.response.use(
       switch (status) {
         case 400:
           Message.error('请求参数错误')
+          break
         case 401:
           return oauth(error)
         case 403:
           Message.error('没有权限，请联系管理员')
+          break
         case 404:
           Message.error('请求资源不存在')
+          break
         default:
           Message.error('服务端错误，请联系管理员')
+          break
       }
     // 无响应
     } else if (error.request) {
@@ -57,13 +62,16 @@ axios.interceptors.response.use(
       Message.error(`请求失败：${error.message}`)
     }
     return Promise.reject(error)
-});
+  }
+)
 
-function oauth(error: any) {
+// eslint-disable-next-line
+function oauth (error: any) {
   if (!store.state.user) {
     redirectLogin()
     return Promise.reject(error)
   }
+
   if (!isRefresh) {
     isRefresh = true
     // 尝试刷新获取新的 token
@@ -71,19 +79,25 @@ function oauth(error: any) {
       if (!res.data.success) {
         throw new Error('刷新 Token 失败')
       }
-      store.commit('setUser', res.data.content)
+      store.dispatch('login', res.data.content)
       requests.forEach(cb => cb())
       requests = []
       return request(error.config)
-    }).catch(err => {
-      console.log(err)
-      store.commit('setUser', null)
+    }).catch(() => {
+      store.dispatch('singOut')
       redirectLogin()
       return Promise.reject(error)
     }).finally(() => {
       isRefresh = false
     })
   }
+
+  // 刷新状态下，把请求挂起放到 requests 数组中
+  return new Promise(resolve => {
+    requests.push(() => {
+      resolve(request(error.config))
+    })
+  })
 }
 
 function redirectLogin () {
